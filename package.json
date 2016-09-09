@@ -1,0 +1,14 @@
+{
+  "name": "musik-cube",
+  "version": "1.0.0",
+  "description": "A musical Rubik's Cube, using arduino, rasbpi, and sonic-pi",
+  "main": "controller/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Peter Hayes, Lexi Ross, Eran Rundstein",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^3.4.0"
+  }
+}

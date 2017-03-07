@@ -4,11 +4,18 @@
   "description": "A musical Rubik's Cube, using arduino, rasbpi, and sonic-pi",
   "main": "controller/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src --fix",
+    "arduino": "node ./src/interfaces/arduino",
+    "udp": "node ./src/interfaces/udp",
+    "random": "node ./src/interfaces/random"
   },
   "author": "Peter Hayes, Lexi Ross, Eran Rundstein",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^3.4.0"
+    "eslint": "^3.16.1",
+    "eslint-config-classdojo": "^1.2.4"
+  },
+  "dependencies": {
+    "serialport": "^4.0.7"
   }
 }

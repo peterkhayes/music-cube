@@ -5,11 +5,12 @@
   the "top" of down is adjacent to front
 */
 
-module.exports = {
+module.exports = () => ({
   fnw: 0,
   fn: 0,
   fne: 0,
   fw: 0,
+  f: 0,
   fe: 0,
   fsw: 0,
   fs: 0,
@@ -19,6 +20,7 @@ module.exports = {
   rn: 1,
   rne: 1,
   rw: 1,
+  r: 1,
   re: 1,
   rsw: 1,
   rs: 1,
@@ -28,6 +30,7 @@ module.exports = {
   bn: 2,
   bne: 2,
   bw: 2,
+  b: 2,
   be: 2,
   bsw: 2,
   bs: 2,
@@ -37,6 +40,7 @@ module.exports = {
   ln: 3,
   lne: 3,
   lw: 3,
+  l: 3,
   le: 3,
   lsw: 3,
   ls: 3,
@@ -46,6 +50,7 @@ module.exports = {
   un: 4,
   une: 4,
   uw: 4,
+  u: 4,
   ue: 4,
   usw: 4,
   us: 4,
@@ -55,8 +60,9 @@ module.exports = {
   dn: 5,
   dne: 5,
   dw: 5,
+  d: 5,
   de: 5,
   dsw: 5,
   ds: 5,
   dse: 5,
-};
+});

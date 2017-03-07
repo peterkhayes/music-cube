@@ -4,84 +4,93 @@ function reverse (cycles) {
   });
 }
 
-const frontCW = [
+const F = [
   ["fnw", "fne", "fse", "fsw"],
   ["fn", "fe", "fs", "fw"],
   ["usw", "rnw", "dne", "lse"],
   ["us", "rw", "dn", "le"],
   ["use", "rsw", "dnw", "lne"],
 ];
-const frontCCW = reverse(frontCW);
+const f = reverse(F);
 
-const backCW = [
+const B = [
   ["bnw", "bne", "bse", "bsw"],
   ["bn", "be", "bs", "bw"],
   ["une", "lnw", "dsw", "rse"],
   ["un", "lw", "ds", "re"],
   ["unw", "lsw", "dse", "rne"],
 ];
-const backCCW = reverse(backCW);
+const b = reverse(B);
 
-const upCW = [
+const U = [
   ["unw", "une", "use", "usw"],
   ["un", "ue", "us", "uw"],
   ["fnw", "lnw", "bnw", "rnw"],
   ["fn", "ln", "bn", "rn"],
   ["fne", "lne", "bne", "rne"],
 ];
-const upCCW = reverse(upCW);
+const u = reverse(U);
 
-const downCW = [
+const D = [
   ["dnw", "dne", "dse", "dsw"],
   ["dn", "de", "ds", "dw"],
   ["fsw", "lsw", "bsw", "rsw"],
   ["fs", "ls", "bs", "rs"],
   ["fse", "lse", "bse", "rse"],
 ];
-const downCCW = reverse(downCW);
+const d = reverse(D);
 
-const leftCW = [
+const L = [
   ["lnw", "lne", "lse", "lsw"],
   ["ln", "le", "ls", "lw"],
   ["unw", "fnw", "dnw", "bse"],
   ["uw", "fw", "dw", "be"],
   ["usw", "fsw", "dsw", "bne"],
 ];
-const leftCCW = reverse(leftCW);
+const l = reverse(L);
 
-const rightCW = [
+const R = [
   ["rnw", "rne", "rse", "rsw"],
   ["rn", "re", "rs", "rw"],
   ["use", "bnw", "dse", "fse"],
   ["ue", "bw", "de", "fe"],
   ["une", "bsw", "dne", "fne"],
 ];
-const rightCCW = reverse(rightCW);
+const r = reverse(R);
 
 function makeRotationFn (rotation) {
   return function(cube) {
-    const copy = JSON.parse(JSON.stringify(cube));
     rotation.forEach((cycle) => {
-      copy[cycle[1]] = cube[cycle[0]];
-      copy[cycle[2]] = cube[cycle[1]];
-      copy[cycle[3]] = cube[cycle[2]];
-      copy[cycle[0]] = cube[cycle[3]];
+      const tmp = cube[cycle[3]];
+      cube[cycle[3]] = cube[cycle[2]];
+      cube[cycle[2]] = cube[cycle[1]];
+      cube[cycle[1]] = cube[cycle[0]];
+      cube[cycle[0]] = tmp;
     });
-    return copy;
   };
 }
 
-module.exports = {
-  frontCW: makeRotationFn(frontCW),
-  frontCCW: makeRotationFn(frontCCW),
-  backCW: makeRotationFn(backCW),
-  backCCW: makeRotationFn(backCCW),
-  upCW: makeRotationFn(upCW),
-  upCCW: makeRotationFn(upCCW),
-  downCW: makeRotationFn(downCW),
-  downCCW: makeRotationFn(downCCW),
-  leftCW: makeRotationFn(leftCW),
-  leftCCW: makeRotationFn(leftCCW),
-  rightCW: makeRotationFn(rightCW),
-  rightCC: makeRotationFn(rightCCW)
+const baseRotations = {
+  F: makeRotationFn(F),
+  f: makeRotationFn(f),
+  B: makeRotationFn(B),
+  b: makeRotationFn(b),
+  U: makeRotationFn(U),
+  u: makeRotationFn(u),
+  D: makeRotationFn(D),
+  d: makeRotationFn(d),
+  L: makeRotationFn(L),
+  l: makeRotationFn(l),
+  R: makeRotationFn(R),
+  r: makeRotationFn(r),
 };
+
+module.exports = Object.assign({}, baseRotations, {
+
+  "?" (cube) {
+    const keys = Object.keys(baseRotations);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    return baseRotations[randomKey](cube);
+  },
+
+});

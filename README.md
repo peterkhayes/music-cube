@@ -3,11 +3,23 @@ A musical Rubik's Cube. Plays generative loop-based music based on the solvednes
 
 Will soon combine with Arduinos to make a physical cube with LEDs.
 
-## Usage
-Make sure you have [Sonic Pi](http://sonic-pi.net/) installed and running. Then run one of the commands below. If a usage method expects input, send one of the strings listed under *available rotations* below.
+## Installation
 
-##### Launch cube and make random rotations
-`npm run random [-- INTERVAL]`
+##### Prerequisites
+- [Sonic Pi](http://sonic-pi.net/) to play the audio
+- [node.js](https://nodejs.org/en/) to run the controller
+- [Arduino](https://www.arduino.cc/) or other microcontroller with serial-port communication if you want to build it physically
+
+##### Install dependencies
+`npm install`
+
+## Usage
+First make sure Sonic Pi is running. On a Mac, this means opening it as an application.
+
+Then run one of the commands below. If a usage method expects input, send one of the strings listed under *available rotations* below (one per message).
+
+##### Launch cube and make random rotations every 2 seconds
+`npm run random [-- OVERRIDE_INTERVAL]`
 
 ##### Launch cube and listen on UDP port 12345 for rotations
 `npm run udp [-- OVERRIDE_PORT]`

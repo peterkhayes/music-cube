@@ -11,7 +11,7 @@ Will soon combine with Arduinos to make a physical cube with LEDs.
 - [Arduino](https://www.arduino.cc/) or other microcontroller with serial-port communication if you want to build it physically
 
 ##### Install dependencies
-`npm install`
+- `npm install && gem install sonic-pi-cli`
 
 ## Usage
 First make sure Sonic Pi is running. On a Mac, this means opening it as an application.

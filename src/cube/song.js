@@ -12,15 +12,16 @@ function playSample (name, sample) {
       beat = (Array (0..${SUBDIVISIONS - 1})).ring.tick
       start = ${SAMPLE_SLICE_SIZE} * ${sample - 1} + ${SUBDIVISION_SIZE} * beat
       finish = start + ${SUBDIVISION_SIZE}
-      sample :${name}, start: start, finish: finish
-      sleep sample_duration :${name}, start: start, finish: finish
+      sample "${SAMPLE_PATH}", "${name}", start: start, finish: finish
+      sleep sample_duration "${SAMPLE_PATH}", "${name}", start: start, finish: finish
     end
   `;
 }
 
-module.exports = function templateSong (cubeData) {
-  const samples = Object.keys(cubeData).map((key) => playSample(key, cubeData[key]));
-  return [`use_sample_pack '${SAMPLE_PATH}'`]
-    .concat(samples)
+module.exports = function templateSong (solvedness) {
+  const script = Object.keys(solvedness)
+    .map((face) => playSample(face, solvedness[face]))
     .join("\n");
+  console.log(script)
+  return script;
 };

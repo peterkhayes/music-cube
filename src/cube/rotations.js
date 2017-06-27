@@ -1,66 +1,23 @@
-function reverse (cycles) {
-  return cycles.map((cycle) => {
-    return cycle.slice().reverse();
-  });
+const geometry = require("./geometry");
+
+function getCycles (side) {
+  const cycles = [];
+
+  // corners and sides of face
+  cycles.push(side.face.slice(1).filter((_, i) => i % 2 === 0));
+  cycles.push(side.face.slice(1).filter((_, i) => i % 2 === 1));
+
+  // three adjacent cycles
+  cycles.push(side.ring.filter((_, i) => i % 3 === 0));
+  cycles.push(side.ring.filter((_, i) => i % 3 === 1));
+  cycles.push(side.ring.filter((_, i) => i % 3 === 2));
+
+  return cycles;
 }
 
-const F = [
-  ["fnw", "fne", "fse", "fsw"],
-  ["fn", "fe", "fs", "fw"],
-  ["usw", "rnw", "dne", "lse"],
-  ["us", "rw", "dn", "le"],
-  ["use", "rsw", "dnw", "lne"],
-];
-const f = reverse(F);
-
-const B = [
-  ["bnw", "bne", "bse", "bsw"],
-  ["bn", "be", "bs", "bw"],
-  ["une", "lnw", "dsw", "rse"],
-  ["un", "lw", "ds", "re"],
-  ["unw", "lsw", "dse", "rne"],
-];
-const b = reverse(B);
-
-const U = [
-  ["unw", "une", "use", "usw"],
-  ["un", "ue", "us", "uw"],
-  ["fnw", "lnw", "bnw", "rnw"],
-  ["fn", "ln", "bn", "rn"],
-  ["fne", "lne", "bne", "rne"],
-];
-const u = reverse(U);
-
-const D = [
-  ["dnw", "dne", "dse", "dsw"],
-  ["dn", "de", "ds", "dw"],
-  ["fsw", "lsw", "bsw", "rsw"],
-  ["fs", "ls", "bs", "rs"],
-  ["fse", "lse", "bse", "rse"],
-];
-const d = reverse(D);
-
-const L = [
-  ["lnw", "lne", "lse", "lsw"],
-  ["ln", "le", "ls", "lw"],
-  ["unw", "fnw", "dnw", "bse"],
-  ["uw", "fw", "dw", "be"],
-  ["usw", "fsw", "dsw", "bne"],
-];
-const l = reverse(L);
-
-const R = [
-  ["rnw", "rne", "rse", "rsw"],
-  ["rn", "re", "rs", "rw"],
-  ["use", "bnw", "dse", "fse"],
-  ["ue", "bw", "de", "fe"],
-  ["une", "bsw", "dne", "fne"],
-];
-const r = reverse(R);
-
-function makeRotationFn (rotation) {
+function makeRotationFn (cycles) {
   return function(cube) {
-    rotation.forEach((cycle) => {
+    cycles.forEach((cycle) => {
       const tmp = cube[cycle[3]];
       cube[cycle[3]] = cube[cycle[2]];
       cube[cycle[2]] = cube[cycle[1]];
@@ -70,19 +27,35 @@ function makeRotationFn (rotation) {
   };
 }
 
+function makeClockwiseRotationFn (side) {
+  const cycles = getCycles(side);
+  return makeRotationFn(cycles);
+}
+
+function makeCounterclockwiseRotationFn (side) {
+  const cycles = getCycles(side);
+  const reversedCycles = cycles.map((cycle) => cycle.slice().reverse());
+  return makeRotationFn(reversedCycles);
+}
+
 const baseRotations = {
-  F: makeRotationFn(F),
-  f: makeRotationFn(f),
-  B: makeRotationFn(B),
-  b: makeRotationFn(b),
-  U: makeRotationFn(U),
-  u: makeRotationFn(u),
-  D: makeRotationFn(D),
-  d: makeRotationFn(d),
-  L: makeRotationFn(L),
-  l: makeRotationFn(l),
-  R: makeRotationFn(R),
-  r: makeRotationFn(r),
+  F: makeClockwiseRotationFn(geometry.frontSide),
+  f: makeCounterclockwiseRotationFn(geometry.frontSide),
+
+  B: makeClockwiseRotationFn(geometry.backSide),
+  b: makeCounterclockwiseRotationFn(geometry.backSide),
+
+  U: makeClockwiseRotationFn(geometry.upSide),
+  u: makeCounterclockwiseRotationFn(geometry.upSide),
+
+  D: makeClockwiseRotationFn(geometry.downSide),
+  d: makeCounterclockwiseRotationFn(geometry.downSide),
+
+  L: makeClockwiseRotationFn(geometry.leftSide),
+  l: makeCounterclockwiseRotationFn(geometry.leftSide),
+
+  R: makeClockwiseRotationFn(geometry.rightSide),
+  r: makeCounterclockwiseRotationFn(geometry.rightSide),
 };
 
 module.exports = Object.assign({}, baseRotations, {
@@ -94,3 +67,4 @@ module.exports = Object.assign({}, baseRotations, {
   },
 
 });
+

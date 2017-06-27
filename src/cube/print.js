@@ -2,7 +2,7 @@ function whitespace (len) {
   return Array(len).fill(" ").join("");
 }
 
-module.exports = function(c, offset=1) {
+module.exports = function(c, offset = 1) {
   const up = `
     ${whitespace(offset * 5)}${c.unw}${c.un}${c.une}
     ${whitespace(offset * 5)}${c.uw }${ c.u}${ c.ue}
@@ -11,7 +11,7 @@ module.exports = function(c, offset=1) {
 
   const down = `
     ${whitespace(offset * 5)}${c.dnw}${c.dn}${c.dne}
-    ${whitespace(offset * 5)}${c.dw }${  c.d}${ c.de}
+    ${whitespace(offset * 5)}${c.dw }${ c.d}${ c.de}
     ${whitespace(offset * 5)}${c.dsw}${c.ds}${c.dse}
   `;
 

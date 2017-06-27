@@ -7,15 +7,19 @@
     "lint": "eslint src --fix",
     "arduino": "node ./src/interfaces/arduino",
     "udp": "node ./src/interfaces/udp",
-    "random": "node ./src/interfaces/random"
+    "random": "node ./src/interfaces/random",
+    "test": "mocha ./test/**/*.js"
   },
   "author": "Peter Hayes, Lexi Ross, Eran Rundstein",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^3.16.1",
-    "eslint-config-classdojo": "^1.2.4"
+    "eslint-config-classdojo": "^1.2.4",
+    "expect": "^1.20.2",
+    "mocha": "^3.4.2"
   },
   "dependencies": {
-    "serialport": "^4.0.7"
+    "serialport": "^4.0.7",
+    "lodash": "^4.17.4"
   }
 }

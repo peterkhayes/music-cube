@@ -10,7 +10,7 @@ server.on("listening", () => {
 })
 
 server.on("message", (msg) => {
-  cube.rotate(msg.toString().trim());
+  cube.handleInput(msg.toString().trim());
 });
 
 

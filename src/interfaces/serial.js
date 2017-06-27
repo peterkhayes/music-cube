@@ -13,7 +13,7 @@ port.on("open", () => {
 })
 
 port.on("data", (msg) => {
-  cube.rotate(msg.toString().trim());
+  cube.handleInput(msg.toString().trim());
 });
 
 
